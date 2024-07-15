@@ -15,6 +15,9 @@ class DataProviderToTestValidationTest extends FeatureTestCase
         $this->postJson('/fruit', $data)->assertStatus($code);
     }
 
+    /**
+     * @return string[][]
+     */
     public static function provideCreationData()
     {
         return [
