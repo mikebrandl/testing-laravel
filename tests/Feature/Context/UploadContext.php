@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Feature\Context;
+
 use App\Services\CsvUploadService;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Illuminate\Http\UploadedFile;

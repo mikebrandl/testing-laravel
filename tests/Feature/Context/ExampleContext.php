@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Feature\Context;
+
 use App\Objects\Basket;
 use App\Objects\Shelf;
 use Behat\Behat\Context\SnippetAcceptingContext;

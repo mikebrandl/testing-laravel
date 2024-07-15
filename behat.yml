@@ -2,6 +2,6 @@ default:
   suites:
     default:
       contexts:
-        - FeatureContext
-        - UploadContext
-        - ExampleContext
+        - Tests\Feature\Context\FeatureContext
+        - Tests\Feature\Context\UploadContext
+        - Tests\Feature\Context\ExampleContext
