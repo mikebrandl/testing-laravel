@@ -1,6 +1,8 @@
 default:
   suites:
     default:
+      paths:
+        - "%paths.base%/features"
       contexts:
         - Tests\Feature\Context\FeatureContext
         - Tests\Feature\Context\UploadContext
