@@ -13,7 +13,7 @@ class UpdateFruitRequest extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'color' => 'required|string'
+            'color' => 'required|string',
         ];
     }
 }

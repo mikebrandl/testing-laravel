@@ -15,7 +15,7 @@ class BasicFruitIntegrationTest extends FeatureTestCase
     public function testShowFruit(): void
     {
         $fruit = Fruit::factory()->create();
-        $this->getJson('/fruit/' . $fruit->id)->assertSuccessful();
+        $this->getJson('/fruit/'.$fruit->id)->assertSuccessful();
     }
 
     public function testShowFruitFails(): void
@@ -39,21 +39,21 @@ class BasicFruitIntegrationTest extends FeatureTestCase
     {
         $fruit = Fruit::factory()->create();
         $data = Fruit::factory()->make()->toArray();
-        $this->putJson('/fruit/' . $fruit->id, $data)->assertSuccessful();
+        $this->putJson('/fruit/'.$fruit->id, $data)->assertSuccessful();
         $this->assertDatabaseHas('fruits', $data);
     }
 
     public function testUpdateFruitRequiresAllFields(): void
     {
         $fruit = Fruit::factory()->create();
-        $this->putJson('/fruit/' . $fruit->id, [])
+        $this->putJson('/fruit/'.$fruit->id, [])
             ->assertJsonValidationErrors(['name', 'color']);
     }
 
     public function testPatchFruit(): void
     {
         $fruit = Fruit::factory()->create();
-        $this->patchJson('/fruit/' . $fruit->id, [])
+        $this->patchJson('/fruit/'.$fruit->id, [])
             ->assertSuccessful();
     }
 
@@ -61,7 +61,7 @@ class BasicFruitIntegrationTest extends FeatureTestCase
     {
         $fruit = Fruit::factory()->create(['name' => 'apple', 'color' => 'red']);
         $data = ['name' => 'testing'];
-        $this->patchJson('/fruit/' . $fruit->id, $data)
+        $this->patchJson('/fruit/'.$fruit->id, $data)
             ->assertSuccessful();
         $this->assertDatabaseHas('fruits', ['name' => 'testing', 'color' => 'red']);
     }
@@ -69,7 +69,7 @@ class BasicFruitIntegrationTest extends FeatureTestCase
     public function testDeleteFruit(): void
     {
         $fruit = Fruit::factory()->create();
-        $this->deleteJson('/fruit/' . $fruit->id)
+        $this->deleteJson('/fruit/'.$fruit->id)
             ->assertSuccessful();
         $this->assertModelMissing($fruit);
     }

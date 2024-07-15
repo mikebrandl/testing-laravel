@@ -13,7 +13,7 @@ class PatchFruitRequest extends FormRequest
     {
         return [
             'name' => 'sometimes|string',
-            'color' => 'sometimes|string'
+            'color' => 'sometimes|string',
         ];
     }
 }

@@ -13,12 +13,14 @@ class FruitController extends Controller
     public function index()
     {
         $fruit = Fruit::all();
+
         return FruitResource::collection($fruit);
     }
 
     public function store(StoreFruitRequest $request)
     {
         $fruit = Fruit::create($request->validated());
+
         return FruitResource::make($fruit);
     }
 
@@ -30,18 +32,21 @@ class FruitController extends Controller
     public function update(UpdateFruitRequest $request, Fruit $fruit)
     {
         $fruit->update($request->validated());
+
         return FruitResource::make($fruit);
     }
 
     public function patch(PatchFruitRequest $request, Fruit $fruit)
     {
         $fruit->update($request->validated());
+
         return FruitResource::make($fruit);
     }
 
     public function destroy(Fruit $fruit)
     {
         $fruit->delete();
+
         return response()->noContent();
     }
 }

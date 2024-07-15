@@ -11,6 +11,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 class FruitFactory extends Factory
 {
     use WithFaker;
+
     /**
      * Define the model's default state.
      *
