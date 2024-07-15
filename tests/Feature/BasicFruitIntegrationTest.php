@@ -18,6 +18,14 @@ class BasicFruitIntegrationTest extends FeatureTestCase
         $this->getJson('/fruit/'.$fruit->id)->assertSuccessful();
     }
 
+    public function testResourceReturnsOnlyName(): void
+    {
+        $fruit = Fruit::factory()->create();
+        $this->getJson('/fruit/'.$fruit->id)
+            ->assertSuccessful()
+            ->assertExactJson(['data' => ['name' => $fruit->name]]);
+    }
+
     public function testShowFruitFails(): void
     {
         $this->getJson('/fruit/999')->assertNotFound();
