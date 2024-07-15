@@ -4,15 +4,27 @@ namespace Tests\Unit;
 
 use App\Exceptions\InvalidHeadersException;
 use App\Services\CsvUploadService;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Mockery\MockInterface;
+use Tests\TestCase;
 
 class CsvUploadServiceTest extends TestCase
 {
+    private CsvUploadService $service;
+
+    use WithFaker;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        $this->service = new CsvUploadService();
+    }
+
     public function testValidationPasses(): void
     {
         $headers = ['name', 'color'];
-        $service = new CsvUploadService();
-        $result = $service->validateHeaders($headers);
+        $result = $this->service->validateHeaders($headers);
         $this->assertTrue($result);
     }
 
@@ -20,7 +32,25 @@ class CsvUploadServiceTest extends TestCase
     {
         $headers = ['name', 'colour', 'test'];
         $this->expectException(InvalidHeadersException::class);
-        $service = new CsvUploadService();
-        $service->validateHeaders($headers);
+        $this->service->validateHeaders($headers);
+    }
+
+    public function testUploadFiles()
+    {
+        // If we are going to mock. Let's mock as little as possible.
+        $headers = ['name', 'color'];
+        $data = ['apple', 'red'];
+        $fileName = 'fruit.csv';
+        $mock = $this->partialMock(CsvUploadService::class, function (MockInterface $mock) {
+            $mock->shouldReceive('processRecords')
+                ->once()
+                ->andReturn(true);
+        });
+        $file = UploadedFile::fake()
+            ->createWithContent(
+                $fileName,
+                implode(',', $headers).PHP_EOL.implode(',', $data)
+            );
+        $mock->uploadFile($file, []);
     }
 }

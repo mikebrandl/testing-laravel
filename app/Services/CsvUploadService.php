@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Exceptions\InvalidHeadersException;
+use Exception;
+use Illuminate\Http\UploadedFile;
 
 class CsvUploadService
 {
@@ -19,5 +21,27 @@ class CsvUploadService
         }
 
         return true;
+    }
+
+    public function uploadFile(UploadedFile $file, array $requestData)
+    {
+        try {
+            $handle = fopen($file, 'r');
+            if (! $handle) {
+                throw new Exception('There is a failure while opening file.');
+            }
+            $fileHeaders = fgetcsv($handle);
+            $this->validateHeaders($fileHeaders);
+            $this->processRecords($handle);
+            fclose($handle);
+        } catch (\Throwable $e) {
+            throw $e;
+            fclose($handle);
+        }
+    }
+
+    public function processRecords($handle)
+    {
+        throw new Exception('Not implemented yet');
     }
 }
