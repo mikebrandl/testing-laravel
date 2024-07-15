@@ -51,6 +51,22 @@ class CsvUploadServiceTest extends TestCase
                 $fileName,
                 implode(',', $headers).PHP_EOL.implode(',', $data)
             );
-        $mock->uploadFile($file, []);
+        $mock->uploadFile($file);
+    }
+
+    public function testUploadFilesWithoutMock()
+    {
+        // If we are going to mock. Let's mock as little as possible.
+        $headers = ['name', 'color'];
+        $data = ['apple', 'red'];
+        $fileName = 'fruit.csv';
+
+        $file = UploadedFile::fake()
+            ->createWithContent(
+                $fileName,
+                implode(',', $headers).PHP_EOL.implode(',', $data)
+            );
+        $result = $this->service->uploadFile($file);
+        $this->assertEquals(1, $result);
     }
 }

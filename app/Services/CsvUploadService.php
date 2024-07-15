@@ -23,7 +23,7 @@ class CsvUploadService
         return true;
     }
 
-    public function uploadFile(UploadedFile $file, array $requestData)
+    public function uploadFile(UploadedFile $file): int
     {
         try {
             $handle = fopen($file, 'r');
@@ -32,16 +32,24 @@ class CsvUploadService
             }
             $fileHeaders = fgetcsv($handle);
             $this->validateHeaders($fileHeaders);
-            $this->processRecords($handle);
+            $result = $this->processRecords($handle);
             fclose($handle);
+
+            return $result;
         } catch (\Throwable $e) {
             throw $e;
             fclose($handle);
         }
     }
 
-    public function processRecords($handle)
+    public function processRecords($handle): int
     {
-        throw new Exception('Not implemented yet');
+        $numConnections = 0;
+
+        while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+            $numConnections++;
+        }
+
+        return $numConnections;
     }
 }
