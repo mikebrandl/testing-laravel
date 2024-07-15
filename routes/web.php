@@ -7,5 +7,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::apiResource('fruits', FruitController::class);
-Route::patch('fruits/{fruit}', [FruitController::class, 'patch']);
+Route::apiResource('fruit', FruitController::class);
+Route::patch('fruit/{fruit}', [FruitController::class, 'patch']);
